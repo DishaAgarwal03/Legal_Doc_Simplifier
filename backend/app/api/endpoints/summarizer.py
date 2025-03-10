@@ -8,9 +8,9 @@ async def summarize_pdf(file: UploadFile = File(...)):
     if file.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="Only PDF files are supported.")
     try:
-        # You can read file content as bytes (this works for small to medium PDFs)
+        # read file content as bytes (this works for small to medium PDFs)
         file_bytes = await file.read()
-        # Pass the bytes wrapped in an in-memory file-like object (e.g., io.BytesIO)
+        # Pass the bytes wrapped in an in-memory file-like object
         from io import BytesIO
         pdf_file = BytesIO(file_bytes)
         summary = generate_summary_from_pdf(pdf_file)
