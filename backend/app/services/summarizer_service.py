@@ -13,6 +13,7 @@ llm = ChatGroq(
     groq_api_key=settings.GROQ_API_KEY
 )
 
+
 def extract_text_from_pdf(pdf_file) -> str:
     """Extracts structured text from a legal contract PDF.
        Expects a file-like object."""
@@ -39,7 +40,7 @@ def summarize_text(text_chunk: str) -> str:
     
     {text_chunk}
 
-    Return only the summary.
+    Return the summary in proper HTML format, including paragraphs, and lists when necessary.
     """
     response = llm.invoke(prompt)
     return response.content

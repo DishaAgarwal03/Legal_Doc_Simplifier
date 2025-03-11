@@ -1,3 +1,4 @@
+from fastapi.responses import HTMLResponse
 import torch
 import numpy as np
 import re
@@ -66,11 +67,13 @@ def simplify_legal_text_using_embeddings(embedding_keywords: list, original_text
     - Maintain legal accuracy while being concise.
     - Include relevant legal implications if necessary.
     
-    **Key Terms Explained (Point-wise):**
+    **Key Terms Explained (Point-wise): EACH KEY TERM STARTS IN A IN NEW LINE ACCORDING TO HTML FORMAT**
     - Provide short definitions or implications for the key legal terms.
+    **Generate an output in html format and make sure that it is left aligned and max heading should be h5 and the heading should speak of the content**
     
     **Original Legal Text:**
     {original_text}
     """
     response = llm.invoke(prompt)
-    return response.content
+    #Instead of string returning in this format
+    return HTMLResponse(content=response.content)
