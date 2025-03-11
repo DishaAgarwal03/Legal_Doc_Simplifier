@@ -11,14 +11,13 @@ import { SimplifierReplyComponent } from './MyComponents/simplifier-reply/simpli
 import * as pdfjsLib from 'pdfjs-dist';
 import { SummarizerService } from './services/summarizer.service';
 import { HttpClient } from '@angular/common/http';
-// import { MarkdownModule } from 'ngx-markdown'; // ✅ Import MarkdownModule
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FileFormComponent, CommonModule, SummarizerComponent, SimplifierComponent, NavbarComponent, SimplifierReplyComponent],
+  imports: [ FileFormComponent, CommonModule, SummarizerComponent, SimplifierComponent, NavbarComponent, SimplifierReplyComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -31,29 +30,27 @@ export class AppComponent {
 
   constructor(private sanitizer: DomSanitizer, private summarizerService: SummarizerService) {}
 
-  async onFileSelected(file: File) {
-    console.log('Received file in AppComponent:', file.name);
-    this.isLoading = true; // Start loader
+async onFileSelected(file: File) {
+  console.log('Received file in AppComponent:', file.name);
+  this.isLoading = true; // Start loader
 
-    this.summarizerService.summarizeFile(file).subscribe(
-      (response) => {
-        this.extractedText = response.summary; // Set the extracted summary text
-        console.log('Summary received:', response.summary);
-        this.isLoading = false; // Stop loader
-        this.isDivVisible = true;
-      },
-      (error) => {
-        console.error('Error sending file:', error);
-        this.isLoading = false; // Stop loader on error
-      }
-    );
+  this.summarizerService.summarizeFile(file).subscribe(
+    (response) => {
+      this.extractedText = response; 
+      console.log('Summary received:', response);
+      this.isLoading = false; // Stop loader
+      this.isDivVisible = true;
+    },
+    (error) => {
+      console.error('Error sending file:', error);
+      this.isLoading = false; // Stop loader on error
+    }
+  );
 
-    // Load the PDF into the UI
-    const unsafeURL = URL.createObjectURL(file);
-    this.pdfURL = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeURL);
-    // this.isDivVisible = true;
-  }
-
+  // Load the PDF into the UI
+  const unsafeURL = URL.createObjectURL(file);
+  this.pdfURL = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeURL);
+}
 
   handleInput(input: string) {
     this.replyText = input; // Update text for ReplyBoxComponent

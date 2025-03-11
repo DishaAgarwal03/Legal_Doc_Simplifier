@@ -8,7 +8,7 @@ export class SimplifierService {
   
   constructor(private http: HttpClient) {}
   
-  simplifyText(text: string): Observable<{ simplified_text: string }> {
-    return this.http.post<{ simplified_text: string }>(this.apiUrl, { text });
+ simplifyText(text: string): Observable<string> {  
+    return this.http.post(this.apiUrl, { text }, { responseType: 'text' }); 
   }
 }
