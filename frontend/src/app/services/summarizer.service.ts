@@ -8,9 +8,11 @@ export class SummarizerService {
   
   constructor(private http: HttpClient) {}
   
-  summarizeFile(file: File): Observable<{ summary: string }> {
+  
+  summarizeFile(file: File): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{ summary: string }>(this.apiUrl, formData);
+
+    return this.http.post(this.apiUrl, formData, { responseType: 'text' }); // Expect HTML response as text
   }
 }

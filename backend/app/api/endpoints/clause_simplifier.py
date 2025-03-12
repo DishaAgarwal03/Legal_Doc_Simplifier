@@ -23,6 +23,8 @@ def clause_simplify(request: ClauseSimplifierRequest):
         reference_terms = ["loan default", "interest rate", "foreclosure", "contract breach", "legal obligations"]
         extracted_keywords = extract_keywords_from_embedding(legal_embedding, reference_terms, clause_text)
         ner_keywords = extract_legal_keywords(clause_text)
+        print(ner_keywords)
+        print(extracted_keywords)
         all_keywords = list(set(extracted_keywords + ner_keywords))
         simplified_text = simplify_legal_text_using_embeddings(all_keywords, clause_text)
         return {"simplified_text": simplified_text}
