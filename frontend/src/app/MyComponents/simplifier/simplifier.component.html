@@ -3,15 +3,24 @@
 
   <!-- Input Field -->
   <div class="input-group mb-3">
-    <input
-      type="text"
+    <textarea
       [(ngModel)]="userInput"
-      class="form-control"
+      #inputArea
+      class="form-control auto-resize"
       placeholder="Type something..."
       [disabled]="isLoading"
-    />
-    <button class="btn btn-primary" (click)="submitText()" [disabled]="isLoading">
-      <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      rows="2"
+    ></textarea>
+    <button
+      class="btn btn-primary"
+      (click)="submitText()"
+      [disabled]="isLoading"
+    >
+      <span
+        *ngIf="isLoading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+      ></span>
       <span *ngIf="!isLoading">Submit</span>
     </button>
   </div>
