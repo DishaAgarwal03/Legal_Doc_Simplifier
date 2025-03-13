@@ -7,7 +7,7 @@
  simplified op
  -->
 
- <div>
+<div>
   <!-- Navbar-->
   <app-navbar></app-navbar>
 
@@ -25,10 +25,20 @@
       </div>
       <p>Processing, please wait...</p>
     </div>
+    <!-- Summarizer -->
+    <app-summarizer
+      [extractedText]="extractedText"
+      *ngIf="isDivVisible"
+    ></app-summarizer>
+
+    <app-simplifier
+      (inputSubmitted)="handleInput($event)"
+      *ngIf="isDivVisible"
+    ></app-simplifier>
 
     <!-- PDF Preview -->
     <div class="container text-center" *ngIf="isDivVisible">
-      <div class="row d-flex"  >
+      <div class="row d-flex">
         <div class="col bigger">
           <div class="Preview">
             <div *ngIf="pdfURL; else elseBlock" class="mt-4">
@@ -41,13 +51,12 @@
           </div>
         </div>
         <div class="col smaller">
-          <app-simplifier (inputSubmitted)="handleInput($event)"></app-simplifier>
-          <app-simplifier-reply [outputText]="replyText" class="simplifier-scrollable"></app-simplifier-reply>
+          <app-simplifier-reply
+            [outputText]="replyText"
+            class="simplifier-scrollable"
+          ></app-simplifier-reply>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Summarizer -->
-  <app-summarizer [extractedText]="extractedText" *ngIf="isDivVisible"></app-summarizer>
 </div>
